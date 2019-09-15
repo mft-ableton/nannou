@@ -225,6 +225,13 @@ impl RawFrame {
 }
 
 impl<'a> AddCommands<'a> {
+    pub fn map_commands<F, E>(self, map: F) -> Result<Self, E>
+    where
+        F: FnOnce(Self) -> Result<Self, E>,
+    {
+        map(self)
+    }
+
     // Maps a call onto the command buffer builder.
     fn map_cb<F, E>(self, map: F) -> Result<Self, E>
     where
